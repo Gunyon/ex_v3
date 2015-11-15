@@ -1,0 +1,225 @@
+<!doctype html>
+<html ng-app="exchangeApp">
+<head>
+	<meta charset="utf-8">
+	<title>Curs valutar</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<div class="container" ng-controller="MainController">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<h1>Valute convertor {{test}}</h1>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+
+					<!-- ===================== CONVERTOR ====================== -->
+					<div class="col-md-6">
+						<form role="form" class="convert-form" data-spy="affix" data-offset-top="30">
+
+							<!-- from value -->
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label for="inputfrom">Value</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<img ng-src='img/countries/{{ allValutes[fromCurrency].CharCode | lowercase }}.jpg'
+															width="16"
+															height="12">
+											</div>
+											<input autofocus
+														type="number"
+														id="inputfrom"
+														ng-model="fromVal"
+														class="form-control from-input"
+														maxlength="15">
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label for="selectfrom">From</label>
+										<select id="selectfrom" ng-model="fromCurrency" class="form-control">
+											<option ng-repeat="val in allValutes"
+															value="{{ val.CharCode }}">{{ val.CharCode }} {{ val.Name }}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<!--**************** Swap button ****************-->
+							<div class="row">
+								<div class="col-xs-offset-6 col-xs-6 text-center">
+									<button class="btn btn-info btn-xs"
+													ng-click="swap()"
+													type="button"
+													data-toggle="tooltip"
+													title="Swap valute"
+													data-placement="right">
+										<span class="glyphicon glyphicon-retweet"></span>
+									</button>
+								</div>
+							</div>
+
+							<!-- to value -->
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label>Result</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<img ng-src='img/countries/{{ allValutes[toCurrency].CharCode | lowercase }}.jpg'
+															width="16"
+															height="12">
+											</div>
+											<input type="text"
+															value="{{ fromVal * (allValutes[fromCurrency].Value / allValutes[fromCurrency].Nominal) / (allValutes[toCurrency].Value / allValutes[toCurrency].Nominal) | currency: ''}}"
+															class="form-control result-input"
+															size="10"
+															maxlength="20"
+															readonly="readonly">
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label for="selectto">To</label>
+										<select id="selectto" ng-model="toCurrency" class="form-control">
+											<option ng-repeat="val in allValutes"
+															value="{{ val.CharCode }}">{{ val.CharCode }} {{ val.Name }}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- ===================== END CONVERTOR ====================== -->
+
+					<!--====================== CURRENCY LIST ======================-->
+					<div class="col-md-6">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<!-- ========== ALL / MAIN LIST BUTTON ==========  -->
+								<div class="panel-heading currencies">
+									<button type="button"
+													class="btn btn-default btn-xs btn-block"
+													ng-show="main_or_all.all"
+													ng-click="main_or_all.all = false"
+													data-toggle="collapse"
+													data-parent="#accordion"
+													data-target="#collapse1"
+													aria-expanded="true"
+													aria-controls="collapse1"
+													title="Show main currencies">
+										<span class="glyphicon glyphicon-menu-up"></span>
+									</button>
+									<button type="button"
+													class="btn btn-default btn-xs btn-block"
+													ng-show="!main_or_all.all"
+													ng-click="main_or_all.all = true"
+													data-toggle="collapse"
+													data-parent="#accordion"
+													data-target="#collapse2"
+													aria-expanded="true"
+													aria-controls="collapse2"
+													title="Show all currencies">
+										<span class="glyphicon glyphicon-menu-down"></span>
+									</button>
+								</div>
+								<!-- ========== END ALL / MAIN LIST BUTTON ==========  -->
+
+								<!-- =============== All Currencies =============== -->
+								<div id="collapse2" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul class="list-group main-valute">
+											<li class="list-group-item" ng-repeat="val in allValutes">
+												<a href="#" ng-click="changeFromCurrency(val.CharCode, $event)">
+													<div class="row">
+														<div class="col-sm-9">
+															<span class="flag">
+																<img ng-src='img/countries/{{ val.CharCode | lowercase }}.jpg'
+																			alt='{{ val.CharCode }}'
+																			width="16"
+																			height="12">
+															</span>
+															<span class='name'>{{ val.CharCode }}</span>
+															<span class='long-name'>{{ val.Name }}</span>
+															<span class="badge" ng-class="fromCurrency == val.CharCode ? 'activeCurr' : ''">{{ fromVal * allValutes[fromCurrency].Value / val.Value | currency: ''}}</span>
+														</div>
+														<div class="col-sm-3 text-right">
+															<span class="one"> {{ val.Value }} <span class='mdl'> lei</span></span>
+															<span class="all">
+															</span>
+														</div>
+													</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<!-- =============== END All Currencies =============== -->
+
+								<!--=========== Main Currencies ===========-->
+								<div id="collapse1" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<ul class="list-group main-valute">
+											<li class="list-group-item" ng-repeat="val in mainValutes">
+												<a href="#" ng-click="changeFromCurrency(val.CharCode, $event)">
+													<div class="row">
+														<div class="col-sm-9">
+															<span class="flag">
+																<img ng-src='img/countries/{{ val.CharCode | lowercase }}.jpg'
+																			alt='{{ val.CharCode }}'
+																			width="16"
+																			height="12">
+															</span>
+															<span class='name'>{{ val.CharCode }}</span>
+															<span class='long-name'>{{ val.Name }}</span>
+															<span class="badge" ng-class="fromCurrency == val.CharCode ? 'activeCurr' : ''">{{ fromVal * allValutes[fromCurrency].Value / val.Value | currency: ''}}</span>
+														</div>
+														<div class="col-sm-3 text-right">
+															<span class="one"> {{ val.Value }} <span class='mdl'> lei</span></span>
+															<span class="all">
+															</span>
+														</div>
+													</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<!--=========== END Main Currencies ===========-->
+							</div>
+						</div>
+					</div>
+					<!--====================== END CURRENCY LIST ======================-->
+				</div>
+			</div>
+
+
+			<div class="panel-footer">
+				
+			</div>
+		</div>
+	</div>
+
+	<!--=========== [ SCRIPTS ]=========== -->
+	<script src="js/vendor/jquery-1.11.3.min.js"></script>
+	<script src="js/vendor/bootstrap.js"></script>
+	<script src="js/vendor/angular.min.js"></script>
+	<script src="js/vendor/helpers.js"></script>
+
+	<!-- Modules -->
+	<script src="js/app.js"></script>
+
+	<!-- Controllers -->
+	<script src="js/controllers/MainController.js"></script>
+
+	<!-- Directives -->
+
+	<!-- Services -->
+</body>
+</html>
