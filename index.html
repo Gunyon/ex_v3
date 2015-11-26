@@ -10,7 +10,7 @@
 	<div class="container" ng-controller="MainController">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
-				<h1>Valute convertor {{test}}</h1>
+				<h1>MD Currency Converter</h1>
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -135,30 +135,12 @@
 								<div id="collapse2" class="panel-collapse collapse">
 									<div class="panel-body">
 										<ul class="list-group main-valute">
-											<li class="list-group-item" ng-repeat="val in allValutes">
-												<a href="#" ng-click="changeFromCurrency(val.CharCode, $event)">
-													<div class="row">
-														<div class="col-sm-9">
-															<span class="flag">
-																<img ng-src='img/countries/{{ val.CharCode | lowercase }}.jpg'
-																			alt='{{ val.CharCode }}'
-																			width="16"
-																			height="12">
-															</span>
-															<span class='name'>{{ val.CharCode }}</span>
-															<span class='long-name'>{{ val.Name }}</span>
-															<span class="badge" 
-																		ng-if="!!fromVal"
-																		ng-class="fromCurrency == val.CharCode ? 'activeCurr' : ''">{{ fromVal * allValutes[fromCurrency].Value / val.Value | currency: ''}}</span>
-														</div>
-														<div class="col-sm-3 text-right">
-															<span class="one"> {{ val.Value }} <span class='mdl'> lei</span></span>
-															<span class="all">
-															</span>
-														</div>
-													</div>
-												</a>
-											</li>
+											<currency-item	ng-repeat="currency in allValutes"
+																			all-currencies="allValutes"
+																			currency-data="currency"
+																			from-val="fromVal"
+																			from-currency="fromCurrency"
+																			change-on-click="changeFromCurrency(curr, event)"></currency-item>
 										</ul>
 									</div>
 								</div>
@@ -168,30 +150,12 @@
 								<div id="collapse1" class="panel-collapse collapse in">
 									<div class="panel-body">
 										<ul class="list-group main-valute">
-											<li class="list-group-item" ng-repeat="val in mainValutes">
-												<a href="#" ng-click="changeFromCurrency(val.CharCode, $event)">
-													<div class="row">
-														<div class="col-sm-9">
-															<span class="flag">
-																<img ng-src='img/countries/{{ val.CharCode | lowercase }}.jpg'
-																			alt='{{ val.CharCode }}'
-																			width="16"
-																			height="12">
-															</span>
-															<span class='name'>{{ val.CharCode }}</span>
-															<span class='long-name'>{{ val.Name }}</span>
-															<span class="badge"
-																		ng-if="!!fromVal"
-																		ng-class="fromCurrency == val.CharCode ? 'activeCurr' : ''">{{ fromVal * allValutes[fromCurrency].Value / val.Value | currency: ''}}</span>
-														</div>
-														<div class="col-sm-3 text-right">
-															<span class="one"> {{ val.Value }} <span class='mdl'> lei</span></span>
-															<span class="all">
-															</span>
-														</div>
-													</div>
-												</a>
-											</li>
+											<currency-item	ng-repeat="currency in mainValutes"
+																			all-currencies="allValutes"
+																			currency-data="currency"
+																			from-val="fromVal"
+																			from-currency="fromCurrency"
+																			change-on-click="changeFromCurrency(curr, event)"></currency-item>
 										</ul>
 									</div>
 								</div>
@@ -223,6 +187,7 @@
 	<script src="js/controllers/MainController.js"></script>
 
 	<!-- Directives -->
+	<script src="js/directives/currency.js"></script>
 
 	<!-- Services -->
 </body>

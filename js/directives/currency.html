@@ -1,0 +1,24 @@
+<li class="list-group-item">
+	<a href="#" ng-click="changeFromCurrency({ curr: currency.CharCode, event: $event })">
+		<div class="row">
+			<div class="col-sm-9">
+				<span class="flag">
+					<img ng-src='img/countries/{{ currency.CharCode | lowercase }}.jpg'
+								alt='{{ currency.CharCode }}'
+								width="16"
+								height="12">
+				</span>
+				<span class='name'>{{ currency.CharCode }}</span>
+				<span class='long-name'>{{ currency.Name }}</span>
+				<span class="badge"
+							ng-if="!!fromVal"
+							ng-class="fromCurrency == currency.CharCode ? 'activeCurr' : ''">{{ fromVal * allCurrencies[fromCurrency].Value / currency.Value | currency: ''}}</span>
+			</div>
+			<div class="col-sm-3 text-right">
+				<span class="one"> {{ currency.Value }} <span class='mdl'> lei</span></span>
+				<span class="all">
+				</span>
+			</div>
+		</div>
+	</a>
+</li>

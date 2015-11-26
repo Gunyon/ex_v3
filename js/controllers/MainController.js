@@ -29,7 +29,7 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.changeFromCurrency = function(charCode, event) {
 		$scope.fromCurrency = charCode;
-		if(event){
+		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
 		}
