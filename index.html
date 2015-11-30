@@ -26,7 +26,7 @@
 										<label for="inputfrom">Value</label>
 										<div class="input-group">
 											<div class="input-group-addon">
-												<img ng-src='img/countries/{{ allValutes[fromCurrency].CharCode | lowercase }}.jpg'
+												<img ng-src='img/countries/{{ all_data[fromCurrency].CharCode | lowercase }}.jpg'
 															width="16"
 															height="12">
 											</div>
@@ -43,7 +43,7 @@
 									<div class="form-group">
 										<label for="selectfrom">From</label>
 										<select id="selectfrom" ng-model="fromCurrency" class="form-control">
-											<option ng-repeat="val in allValutes"
+											<option ng-repeat="val in all_data"
 															value="{{ val.CharCode }}">{{ val.CharCode }} {{ val.Name }}</option>
 										</select>
 									</div>
@@ -71,12 +71,12 @@
 										<label>Result</label>
 										<div class="input-group">
 											<div class="input-group-addon">
-												<img ng-src='img/countries/{{ allValutes[toCurrency].CharCode | lowercase }}.jpg'
+												<img ng-src='img/countries/{{ all_data[toCurrency].CharCode | lowercase }}.jpg'
 															width="16"
 															height="12">
 											</div>
 											<input type="text"
-															value="{{ fromVal * (allValutes[fromCurrency].Value / allValutes[fromCurrency].Nominal) / (allValutes[toCurrency].Value / allValutes[toCurrency].Nominal) | currency: ''}}"
+															value="{{ fromVal * (all_data[fromCurrency].Value / all_data[fromCurrency].Nominal) / (all_data[toCurrency].Value / all_data[toCurrency].Nominal) | currency: ''}}"
 															class="form-control result-input"
 															size="10"
 															maxlength="20"
@@ -88,7 +88,7 @@
 									<div class="form-group">
 										<label for="selectto">To</label>
 										<select id="selectto" ng-model="toCurrency" class="form-control">
-											<option ng-repeat="val in allValutes"
+											<option ng-repeat="val in all_data"
 															value="{{ val.CharCode }}">{{ val.CharCode }} {{ val.Name }}</option>
 										</select>
 									</div>
@@ -135,8 +135,8 @@
 								<div id="collapse2" class="panel-collapse collapse">
 									<div class="panel-body">
 										<ul class="list-group main-valute">
-											<currency-item	ng-repeat="currency in allValutes"
-																			all-currencies="allValutes"
+											<currency-item	ng-repeat="currency in all_curr | orderBy: 'CharCode'"
+																			all-currencies="all_data"
 																			currency-data="currency"
 																			from-val="fromVal"
 																			from-currency="fromCurrency"
@@ -150,8 +150,8 @@
 								<div id="collapse1" class="panel-collapse collapse in">
 									<div class="panel-body">
 										<ul class="list-group main-valute">
-											<currency-item	ng-repeat="currency in mainValutes"
-																			all-currencies="allValutes"
+											<currency-item	ng-repeat="currency in main_curr"
+																			all-currencies="all_data"
 																			currency-data="currency"
 																			from-val="fromVal"
 																			from-currency="fromCurrency"

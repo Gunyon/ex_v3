@@ -14,9 +14,10 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 			return $.parseXML(data);
 		}
 	}).success(function(data) {
-		var getJSON = getDataFromXML(data);
-		$scope.allValutes = getJSON.all;
-		$scope.mainValutes = getJSON.main;
+		var data_converted = getDataFromXML(data);
+		$scope.all_data = data_converted.allData;
+		$scope.all_curr = data_converted.allCurr;
+		$scope.main_curr = data_converted.mainCurr;
 	}).error(function(err) {
 		console.log(err);  // log error messagge
 	});
