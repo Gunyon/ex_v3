@@ -4,7 +4,7 @@ var getCurrentDate = function() {
 			mm = d.getMonth() + 1,
 			yyyy = d.getFullYear();
 	return (dd < 10 ? '0' + dd : dd) + '.' + (mm < 10 ? '0' + mm : mm) + '.' + yyyy;
-}
+};
 
 // transform XML to object
 var getDataFromXML = function(xml) {
@@ -32,4 +32,4 @@ var getDataFromXML = function(xml) {
 		}
 	});
 	return { allData: allData, allCurr: allCurrencies, mainCurr: mainCurrencies };
-}
+};

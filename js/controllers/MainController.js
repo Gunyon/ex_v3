@@ -26,7 +26,7 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 		var tmp = $scope.fromCurrency;
 		$scope.fromCurrency = $scope.toCurrency;
 		$scope.toCurrency = tmp;
-	}
+	};
 
 	$scope.changeFromCurrency = function(charCode, event) {
 		$scope.fromCurrency = charCode;
@@ -34,7 +34,7 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 			event.stopPropagation();
 			event.preventDefault();
 		}
-	}
+	};
 
 	$scope.$watch('fromCurrency', function(newValue, oldValue) { setFocusOnFromInput(); });
 	$scope.$watch('toCurrency', function(newValue, oldValue) { setFocusOnFromInput(); });
