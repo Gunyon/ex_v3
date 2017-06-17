@@ -8,28 +8,20 @@ var getCurrentDate = function() {
 
 // transform XML to object
 var getDataFromXML = function(xml) {
-	var tmp, allData = {},
-			allCurrencies = [], mainCurrencies = [],
-			cc, nom, name, val;
+	var cc, allData = {},
+			allCurrencies = [];
 			mainVArr = ['EUR', 'USD', 'RON', 'GBP', 'RUB', 'UAH'];
 	allData.MDL = { CharCode: "MDL", Nominal: 1, Name: "Leu Moldovenesc", Value: 1 };
 	$(xml).find("Valute").each(function() {
 		cc = $(this).children("CharCode").text();
-		nom = $(this).children("Nominal").text();
-		name = $(this).children("Name").text();
-		val = $(this).children("Value").text();
-		tmp = {};
-		allData[cc] = {};
-		tmp.CharCode = allData[cc].CharCode = cc;
-		tmp.Nominal = allData[cc].Nominal = nom;
-		tmp.Name = allData[cc].Name = name;
-		tmp.Value = allData[cc].Value = val;
-
-		allCurrencies.push(tmp);
-
-		if (mainVArr.indexOf(cc) > -1) {
-			mainCurrencies.push(tmp);
-		}
+		allData[cc] = {
+			CharCode: cc,
+			Nominal: $(this).children("Nominal").text(),
+			Name: $(this).children("Name").text(),
+			Value: $(this).children("Value").text(),
+			isMain: mainVArr.indexOf(cc) > -1 ? 'true' : 'false'
+		};
+		allCurrencies.push(allData[cc]);
 	});
-	return { allData: allData, allCurr: allCurrencies, mainCurr: mainCurrencies };
+	return { allData: allData, allCurr: allCurrencies };
 };

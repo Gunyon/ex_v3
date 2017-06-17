@@ -106,36 +106,18 @@
 								<div class="panel-heading currencies">
 									<button type="button"
 													class="btn btn-default btn-xs btn-block"
-													ng-show="main_or_all.all"
-													ng-click="main_or_all.all = false"
-													data-toggle="collapse"
-													data-parent="#accordion"
-													data-target="#collapse1"
-													aria-expanded="true"
-													aria-controls="collapse1"
-													title="Show main currencies">
-										<span class="glyphicon glyphicon-menu-up"></span>
-									</button>
-									<button type="button"
-													class="btn btn-default btn-xs btn-block"
-													ng-show="!main_or_all.all"
-													ng-click="main_or_all.all = true"
-													data-toggle="collapse"
-													data-parent="#accordion"
-													data-target="#collapse2"
-													aria-expanded="true"
-													aria-controls="collapse2"
+													ng-click="showAll = !showAll"
 													title="Show all currencies">
-										<span class="glyphicon glyphicon-menu-down"></span>
+										<span class="glyphicon glyphicon-menu-{{showAll ? 'up' : 'down'}}"></span>
 									</button>
 								</div>
 								<!-- ========== END ALL / MAIN LIST BUTTON ==========  -->
 
 								<!-- =============== All Currencies =============== -->
-								<div id="collapse2" class="panel-collapse collapse">
+								<div id="collapse2" class="panel-collapse collapse in">
 									<div class="panel-body">
 										<ul class="list-group main-valute">
-											<currency-item	ng-repeat="currency in all_curr | orderBy: 'CharCode'"
+											<currency-item	ng-repeat="currency in all_curr | filter: {isMain: showAll ? '' : true}"
 																			all-currencies="all_data"
 																			currency-data="currency"
 																			from-val="fromVal"
@@ -145,21 +127,6 @@
 									</div>
 								</div>
 								<!-- =============== END All Currencies =============== -->
-
-								<!--=========== Main Currencies ===========-->
-								<div id="collapse1" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<ul class="list-group main-valute">
-											<currency-item	ng-repeat="currency in main_curr"
-																			all-currencies="all_data"
-																			currency-data="currency"
-																			from-val="fromVal"
-																			from-currency="fromCurrency"
-																			change-on-click="changeFromCurrency(curr, event)"></currency-item>
-										</ul>
-									</div>
-								</div>
-								<!--=========== END Main Currencies ===========-->
 							</div>
 						</div>
 					</div>

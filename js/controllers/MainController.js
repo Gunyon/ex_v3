@@ -17,7 +17,6 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 		var data_converted = getDataFromXML(data);
 		$scope.all_data = data_converted.allData;
 		$scope.all_curr = data_converted.allCurr;
-		$scope.main_curr = data_converted.mainCurr;
 	}).error(function(err) {
 		console.log(err);  // log error messagge
 	});
